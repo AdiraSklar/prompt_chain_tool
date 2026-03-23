@@ -1,0 +1,84 @@
+import Link from "next/link";
+
+type Panel = "steps" | "library" | "generate";
+
+type Props = {
+  flavorId: number;
+  flavorSlug: string;
+  activePanel: Panel;
+};
+
+const navItems: { panel: Panel; label: string; icon: React.FC }[] = [
+  { panel: "steps",    label: "Steps",           icon: StepsIcon },
+  { panel: "library",  label: "Caption Library",  icon: LibraryIcon },
+  { panel: "generate", label: "Generate",          icon: GenerateIcon },
+];
+
+export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
+  return (
+    <aside className="w-56 flex-shrink-0 border-r border-zinc-800 bg-zinc-900 flex flex-col">
+      {/* Header — flavor name + back link */}
+      <div className="px-4 pt-5 pb-4 border-b border-zinc-800">
+        <Link
+          href="/humor-flavors"
+          className="text-xs text-zinc-600 hover:text-zinc-400 transition"
+        >
+          ← All Flavors
+        </Link>
+        <p className="mt-2 text-sm font-bold text-zinc-100 font-mono truncate" title={flavorSlug}>
+          {flavorSlug}
+        </p>
+        <p className="mt-0.5 text-xs text-zinc-600">Humor Flavor</p>
+      </div>
+
+      {/* Nav */}
+      <nav className="flex-1 px-2 py-3 space-y-0.5">
+        {navItems.map(({ panel, label, icon: Icon }) => (
+          <Link
+            key={panel}
+            href={`/humor-flavors/${flavorId}?panel=${panel}`}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+              activePanel === panel
+                ? "bg-violet-600/20 text-violet-300 border border-violet-500/20"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 border border-transparent"
+            }`}
+          >
+            <Icon />
+            {label}
+          </Link>
+        ))}
+      </nav>
+    </aside>
+  );
+}
+
+// ─── Icons ────────────────────────────────────────────────────────────────────
+
+function StepsIcon() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+      <rect x="9" y="3" width="6" height="4" rx="1" />
+      <path d="M9 12h6M9 16h4" />
+    </svg>
+  );
+}
+
+function LibraryIcon() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M3 9h18" />
+      <path d="M9 21V9" />
+    </svg>
+  );
+}
+
+function GenerateIcon() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
+      <path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75L19 15z" />
+    </svg>
+  );
+}
