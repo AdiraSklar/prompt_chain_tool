@@ -86,8 +86,8 @@ export async function POST(request: Request) {
   const { data: profile } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", session.user.id)
-    .single();
+    .eq("id", session.user.id)
+    .single() as { data: { id: string } | null };
 
   const db = supabase as any; // eslint-disable-line @typescript-eslint/no-explicit-any
   await db.from("captions").insert(

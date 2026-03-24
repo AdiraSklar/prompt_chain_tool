@@ -18,9 +18,16 @@ export async function requireMatrixAdmin(): Promise<Profile> {
     .from("profiles")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .single() as { data: Profile | null };
 
-  if (!profile || (!profile.is_superadmin && !profile.is_matrix_admin)) {
+  console.log("[requireMatrixAdmin] user.id:", user.id);
+  console.log("[requireMatrixAdmin] profile:", profile ? { id: profile.id, is_superadmin: profile.is_superadmin, is_matrix_admin: profile.is_matrix_admin } : null);
+
+  if (!profile) {
+    redirect("/login");
+  }
+
+  if (!profile.is_superadmin && !profile.is_matrix_admin) {
     redirect("/unauthorized");
   }
 
