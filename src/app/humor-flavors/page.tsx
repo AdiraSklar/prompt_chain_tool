@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireMatrixAdmin } from "@/lib/auth/requireMatrixAdmin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeleteFlavorButton } from "@/components/DeleteFlavorButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import type { HumorFlavor } from "@/types/db";
 
 export const metadata = { title: "Humor Flavors" };
@@ -63,6 +64,7 @@ function PageHeader({ count }: { count: number }) {
         </span>
       </div>
       <div className="flex items-center gap-2">
+        <ThemeToggle />
         <Link
           href="/humor-flavors/new"
           className="rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 transition"

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 type Panel = "steps" | "library" | "generate";
 
@@ -49,8 +50,13 @@ export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
         ))}
       </nav>
 
+      {/* Theme toggle */}
+      <div className="px-3 py-2 border-t border-zinc-800">
+        <ThemeToggle />
+      </div>
+
       {/* Sign out */}
-      <div className="px-2 py-3 border-t border-zinc-800">
+      <div className="px-2 py-2 border-t border-zinc-800">
         <form action="/logout" method="POST">
           <button
             type="submit"
