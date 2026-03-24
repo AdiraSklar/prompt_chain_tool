@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const { cdnUrl, humorFlavorId, numCaptions = 4 } = await request.json();
+  const { cdnUrl, humorFlavorId, numCaptions = 5 } = await request.json();
 
   if (!cdnUrl) {
     return NextResponse.json({ error: "Missing cdnUrl" }, { status: 400 });

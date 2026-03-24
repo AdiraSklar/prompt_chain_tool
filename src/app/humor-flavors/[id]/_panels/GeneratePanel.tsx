@@ -58,7 +58,7 @@ export function GeneratePanel({ flavorId, flavorSlug }: Props) {
       const generateRes = await fetch("/api/pipeline/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cdnUrl, humorFlavorId: flavorId, numCaptions: 4 }),
+        body: JSON.stringify({ cdnUrl, humorFlavorId: flavorId, numCaptions: 5 }),
       });
       if (!generateRes.ok) {
         const body = await generateRes.json().catch(() => ({}));
@@ -166,7 +166,22 @@ export function GeneratePanel({ flavorId, flavorSlug }: Props) {
           <StatusBadge status={status} />
         </div>
 
-        {captions.length > 0 ? (
+        {isLoading ? (
+          <div className="px-6 py-12 flex flex-col items-center justify-center gap-4">
+            <div className="flex items-center gap-1.5">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-bounce"
+                  style={{ animationDelay: `${i * 100}ms` }}
+                />
+              ))}
+            </div>
+            <p className="text-sm text-zinc-500">
+              {status === "uploading" ? "Uploading image…" : "Generating captions…"}
+            </p>
+          </div>
+        ) : captions.length > 0 ? (
           <ul className="divide-y divide-zinc-800">
             {captions.map((caption, i) => (
               <li

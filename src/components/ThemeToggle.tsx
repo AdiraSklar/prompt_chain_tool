@@ -7,23 +7,22 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Avoid hydration mismatch
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   return (
-    <div className="flex items-center gap-1 rounded-lg border border-zinc-700 p-1">
+    <div className="flex w-fit items-center gap-0.5 rounded-lg bg-zinc-800 p-1">
       <ThemeButton
         active={theme === "light"}
         onClick={() => setTheme("light")}
-        title="Light"
+        title="Light mode"
       >
         <SunIcon />
       </ThemeButton>
       <ThemeButton
         active={theme === "dark"}
         onClick={() => setTheme("dark")}
-        title="Dark"
+        title="Dark mode"
       >
         <MoonIcon />
       </ThemeButton>
@@ -46,10 +45,10 @@ function ThemeButton({
     <button
       onClick={onClick}
       title={title}
-      className={`rounded-md p-1.5 transition ${
+      className={`flex items-center justify-center rounded-md w-7 h-7 transition-all ${
         active
-          ? "bg-zinc-700 text-zinc-100"
-          : "text-zinc-500 hover:text-zinc-300"
+          ? "bg-zinc-100 text-zinc-900 shadow-sm"
+          : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-700"
       }`}
     >
       {children}
@@ -73,4 +72,3 @@ function MoonIcon() {
     </svg>
   );
 }
-

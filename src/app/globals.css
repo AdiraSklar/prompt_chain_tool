@@ -58,6 +58,33 @@ html:not(.dark) {
     border-color: #d4d4d8;
   }
 
-  /* Hover states for zinc-800 backgrounds */
+  /* Hover / active states */
   & .hover\:bg-zinc-800:hover { background-color: #e4e4e7; }
+  & .hover\:bg-zinc-700:hover { background-color: #d4d4d8; }
+  & .active\:bg-zinc-700:active { background-color: #d4d4d8; }
+  & .active\:bg-zinc-600:active { background-color: #a1a1aa; }
+  & .hover\:text-zinc-100:hover { color: #18181b; }
+  & .hover\:text-zinc-200:hover { color: #27272a; }
+
+  /* ThemeToggle pill background */
+  & .bg-zinc-800 { background-color: #e4e4e7; }
+
+  /* Active theme button (light pill on dark bg → dark pill on light bg) */
+  & .bg-zinc-100 { background-color: #18181b; }
+  & .text-zinc-900 { color: #f4f4f5; }
+
+  /* Card hover in light mode */
+  & .flavor-card:hover {
+    background-color: #ede9fe;
+    box-shadow: 0 4px 20px #7c3aed33;
+  }
+
+  /* Violet text — make readable on light backgrounds */
+  & .text-violet-200 { color: #5b21b6; }
+  & .text-violet-300 { color: #6d28d9; }
+  & .text-violet-400 { color: #7c3aed; }
+
+  /* Active nav border in sidebar */
+  & .border-violet-500\/30 { border-color: #c4b5fd; }
+  & .bg-violet-600\/25 { background-color: #ede9fe; }
 }

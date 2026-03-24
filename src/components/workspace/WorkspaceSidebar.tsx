@@ -22,7 +22,7 @@ export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
       <div className="px-4 pt-5 pb-4 border-b border-zinc-800">
         <Link
           href="/humor-flavors"
-          className="text-xs text-zinc-600 hover:text-zinc-400 transition"
+          className="text-xs text-zinc-500 hover:text-zinc-200 transition"
         >
           ← All Flavors
         </Link>
@@ -40,8 +40,8 @@ export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
             href={`/humor-flavors/${flavorId}?panel=${panel}`}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
               activePanel === panel
-                ? "bg-violet-600/20 text-violet-300 border border-violet-500/20"
-                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 border border-transparent"
+                ? "bg-violet-600/25 text-violet-200 border border-violet-500/30 shadow-sm"
+                : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 active:bg-zinc-700 border border-transparent"
             }`}
           >
             <Icon />
@@ -50,17 +50,14 @@ export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
         ))}
       </nav>
 
-      {/* Theme toggle */}
-      <div className="px-3 py-2 border-t border-zinc-800">
+      {/* Theme toggle + sign out */}
+      <div className="px-3 py-3 border-t border-zinc-800 flex items-center justify-between gap-2">
         <ThemeToggle />
-      </div>
-
-      {/* Sign out */}
-      <div className="px-2 py-2 border-t border-zinc-800">
         <form action="/logout" method="POST">
           <button
             type="submit"
-            className="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800 transition"
+            title="Sign out"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-500 hover:text-zinc-100 hover:bg-zinc-800 active:bg-zinc-700 transition"
           >
             <SignOutIcon />
             Sign out

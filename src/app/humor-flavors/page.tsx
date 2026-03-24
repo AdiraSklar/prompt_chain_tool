@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { requireMatrixAdmin } from "@/lib/auth/requireMatrixAdmin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { DeleteFlavorButton } from "@/components/DeleteFlavorButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FlavorSearch } from "@/components/FlavorSearch";
 import type { HumorFlavor } from "@/types/db";
 
 export const metadata = { title: "Humor Flavors" };
@@ -26,27 +26,27 @@ export default async function HumorFlavorsPage() {
 
   if (error) {
     return (
-      <main className="min-h-screen bg-zinc-950 px-6 py-10 max-w-5xl mx-auto">
-        <PageHeader count={0} />
-        <p className="text-red-400 text-sm">Failed to load flavors: {error.message}</p>
-      </main>
+      <div className="min-h-screen bg-zinc-950">
+        <main className="px-6 py-10 max-w-5xl mx-auto">
+          <PageHeader count={0} />
+          <p className="text-red-400 text-sm">Failed to load flavors: {error.message}</p>
+        </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 px-6 py-10 max-w-5xl mx-auto">
+    <div className="min-h-screen bg-zinc-950">
+    <main className="px-6 py-10 max-w-5xl mx-auto">
       <PageHeader count={flavors.length} />
 
       {flavors.length === 0 ? (
         <p className="text-zinc-500 text-sm">No humor flavors found.</p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {flavors.map((flavor) => (
-            <FlavorCard key={flavor.id} flavor={flavor} />
-          ))}
-        </div>
+        <FlavorSearch flavors={flavors} />
       )}
     </main>
+    </div>
   );
 }
 
@@ -67,56 +67,19 @@ function PageHeader({ count }: { count: number }) {
         <ThemeToggle />
         <Link
           href="/humor-flavors/new"
-          className="rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 transition"
+          className="flex items-center gap-1.5 rounded-xl bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white text-sm font-semibold px-4 py-2 transition shadow-sm shadow-violet-900/40"
         >
-          + New Flavor
+          <span className="text-violet-200 text-base leading-none">+</span>
+          New Flavor
         </Link>
         <form action="/logout" method="POST">
           <button
             type="submit"
-            className="rounded-xl border border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 text-sm font-medium px-4 py-2 transition"
+            className="rounded-xl bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 text-zinc-300 hover:text-zinc-100 text-sm font-medium px-4 py-2 transition"
           >
             Sign out
           </button>
         </form>
-      </div>
-    </div>
-  );
-}
-
-// ─── Flavor card ──────────────────────────────────────────────────────────────
-// Note: <Link> and <DeleteFlavorButton> are siblings, not nested, to keep
-// the HTML valid (no interactive elements inside <a>).
-
-function FlavorCard({ flavor }: { flavor: HumorFlavorRow }) {
-  return (
-    <div className="rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-colors flex flex-col">
-      {/* Clickable content area */}
-      <Link
-        href={`/humor-flavors/${flavor.id}`}
-        className="group flex-1 block px-6 pt-5 pb-4"
-      >
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-mono text-zinc-600 bg-zinc-800 border border-zinc-700 rounded px-1.5 py-0.5">
-            #{flavor.id}
-          </span>
-          <span className="text-base font-semibold font-mono text-zinc-100 group-hover:text-violet-300 transition-colors truncate">
-            {flavor.slug}
-          </span>
-        </div>
-        <p className="text-sm text-zinc-500 leading-relaxed line-clamp-2 min-h-[2.5rem]">
-          {flavor.description ?? (
-            <span className="italic text-zinc-700">No description</span>
-          )}
-        </p>
-      </Link>
-
-      {/* Footer: date + actions */}
-      <div className="flex items-center justify-between border-t border-zinc-800 px-6 py-3">
-        <p className="text-xs text-zinc-700">
-          Modified {new Date(flavor.modified_datetime_utc).toLocaleString()}
-        </p>
-        <DeleteFlavorButton id={flavor.id} slug={flavor.slug} />
       </div>
     </div>
   );
