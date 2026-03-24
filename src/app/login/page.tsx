@@ -17,13 +17,13 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-zinc-950">
       <div className="w-full max-w-sm rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-sm">
         <h1 className="mb-2 text-2xl font-bold text-zinc-50">Sign in</h1>
-        <p className="mb-8 text-sm text-zinc-500">
+        <p className="mb-8 text-sm text-zinc-400">
           Use your Google account to continue.
         </p>
 
         <button
           onClick={handleGoogleLogin}
-          className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-medium text-zinc-200 shadow-sm transition-colors hover:bg-zinc-800"
+          className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-medium text-zinc-300 shadow-sm transition-colors hover:bg-zinc-800 hover:text-zinc-100"
         >
           <GoogleIcon />
           Continue with Google
