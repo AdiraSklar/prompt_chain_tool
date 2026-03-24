@@ -62,12 +62,22 @@ function PageHeader({ count }: { count: number }) {
           {count}
         </span>
       </div>
-      <Link
-        href="/humor-flavors/new"
-        className="rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 transition"
-      >
-        + New Flavor
-      </Link>
+      <div className="flex items-center gap-2">
+        <Link
+          href="/humor-flavors/new"
+          className="rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 transition"
+        >
+          + New Flavor
+        </Link>
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            className="rounded-xl border border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 text-sm font-medium px-4 py-2 transition"
+          >
+            Sign out
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

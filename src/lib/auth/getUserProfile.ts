@@ -10,9 +10,10 @@ export async function getUserProfile(): Promise<GetUserProfileResult> {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (authError || !user) {
     return { user: null, profile: null };
   }
 
@@ -26,5 +27,5 @@ export async function getUserProfile(): Promise<GetUserProfileResult> {
     return { user: null, profile: null };
   }
 
-  return { user, profile };
+  return { user, profile: profile as Profile };
 }

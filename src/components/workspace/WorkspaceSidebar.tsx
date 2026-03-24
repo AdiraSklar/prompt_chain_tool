@@ -48,6 +48,19 @@ export function WorkspaceSidebar({ flavorId, flavorSlug, activePanel }: Props) {
           </Link>
         ))}
       </nav>
+
+      {/* Sign out */}
+      <div className="px-2 py-3 border-t border-zinc-800">
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            className="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800 transition"
+          >
+            <SignOutIcon />
+            Sign out
+          </button>
+        </form>
+      </div>
     </aside>
   );
 }
@@ -70,6 +83,16 @@ function LibraryIcon() {
       <rect x="3" y="3" width="18" height="18" rx="2" />
       <path d="M3 9h18" />
       <path d="M9 21V9" />
+    </svg>
+  );
+}
+
+function SignOutIcon() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
     </svg>
   );
 }
