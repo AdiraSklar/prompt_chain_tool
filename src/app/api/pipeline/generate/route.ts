@@ -82,23 +82,5 @@ export async function POST(request: Request) {
         String(c)
   );
 
-  // Save captions to the DB so they appear in Caption Library
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id")
-    .eq("id", session.user.id)
-    .single() as { data: { id: string } | null };
-
-  const db = supabase as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  await db.from("captions").insert(
-    captions.map((content: string) => ({
-      content,
-      image_id: imageId,
-      humor_flavor_id: humorFlavorId,
-      is_public: false,
-      profile_id: profile?.id ?? null,
-    }))
-  );
-
   return NextResponse.json({ captions, imageId });
 }
