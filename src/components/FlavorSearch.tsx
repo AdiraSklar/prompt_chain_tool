@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { DeleteFlavorButton } from "@/components/DeleteFlavorButton";
+import { DuplicateFlavorModal } from "@/components/DuplicateFlavorModal";
 
 type Flavor = {
   id: number;
@@ -11,8 +12,11 @@ type Flavor = {
   modified_datetime_utc: string;
 };
 
+type DuplicateTarget = { id: number; slug: string } | null;
+
 export function FlavorSearch({ flavors }: { flavors: Flavor[] }) {
   const [query, setQuery] = useState("");
+  const [duplicateTarget, setDuplicateTarget] = useState<DuplicateTarget>(null);
 
   const filtered = query.trim()
     ? flavors.filter(
@@ -23,6 +27,14 @@ export function FlavorSearch({ flavors }: { flavors: Flavor[] }) {
     : flavors;
 
   return (
+    <>
+    {duplicateTarget && (
+      <DuplicateFlavorModal
+        flavorId={duplicateTarget.id}
+        originalSlug={duplicateTarget.slug}
+        onClose={() => setDuplicateTarget(null)}
+      />
+    )}
     <div className="space-y-6">
       {/* Search bar */}
       <div className="relative">
@@ -78,13 +90,32 @@ export function FlavorSearch({ flavors }: { flavors: Flavor[] }) {
                 <p className="text-xs text-zinc-700">
                   Modified {new Date(flavor.modified_datetime_utc).toLocaleDateString()}
                 </p>
-                <DeleteFlavorButton id={flavor.id} slug={flavor.slug} />
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={(e) => { e.preventDefault(); setDuplicateTarget({ id: flavor.id, slug: flavor.slug }); }}
+                    title="Duplicate flavor"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-zinc-500 hover:text-violet-400 hover:bg-violet-500/10 transition"
+                  >
+                    <DuplicateIcon />
+                  </button>
+                  <DeleteFlavorButton id={flavor.id} slug={flavor.slug} />
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
     </div>
+    </>
+  );
+}
+
+function DuplicateIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
   );
 }
 
