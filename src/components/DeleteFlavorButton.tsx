@@ -14,7 +14,7 @@ export function DeleteFlavorButton({ id, slug }: Props) {
   const router = useRouter();
 
   function handleDelete() {
-    if (!window.confirm(`Delete "${slug}"?\n\nThis cannot be undone.`)) return;
+    if (!window.confirm(`Delete "${slug}"?\n\nThis will permanently delete the flavor and all its steps. This cannot be undone.`)) return;
 
     startTransition(async () => {
       const result = await deleteHumorFlavor(id);

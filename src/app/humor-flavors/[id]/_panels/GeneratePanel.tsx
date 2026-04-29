@@ -29,6 +29,25 @@ export function GeneratePanel({ flavorId, flavorSlug }: Props) {
     setStatus("idle");
   }
 
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    const f = e.dataTransfer.files?.[0] ?? null;
+    if (!f) return;
+    if (!SUPPORTED_TYPES.includes(f.type)) {
+      setError(`Unsupported file type: ${f.type || "unknown"}. Use JPEG, PNG, WebP, GIF, or HEIC.`);
+      return;
+    }
+    setFile(f);
+    setPreview(URL.createObjectURL(f));
+    setCaptions([]);
+    setError(null);
+    setStatus("idle");
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+  }
+
   async function handleGenerate() {
     if (!file) return;
     setError(null);
@@ -99,6 +118,8 @@ export function GeneratePanel({ flavorId, flavorSlug }: Props) {
         <div
           className="m-4 rounded-xl border-2 border-dashed border-zinc-800 overflow-hidden cursor-pointer hover:border-zinc-600 transition"
           onClick={() => inputRef.current?.click()}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
         >
           {preview ? (
             <div className="relative w-full aspect-video">
